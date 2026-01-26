@@ -1,58 +1,264 @@
+---
+const pizzas = [
+  // Tus 3 (misma fuente)
+  {
+    title: "Margherita Originale",
+    desc: "Tomate San Marzano, Mozzarella di Búfala y albahaca fresca.",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBz_rpL0Um8xrKz9gc5l0PblJahAEaCeub2jNSoyLEap3iA5Klm6zYztqy5qwW_X5HRoVuHNAAmkGhg7xTz0FVhxdntUkfhGmXSOClPo-UisepxEbpG66lSCsMF6CU5TdraL8wRCBRcGJIAne1y64MGlsYRXaNqLqwWqpJ36t8UUHk80t3Cb5lIm7EqbGQELKacuL3psr9wETXMPR88I1aEoehxPfcbZPnYdBJlNr7b2lO_yggp3AzFauqaYa5GZzeFd_I03TciWOI",
+    alt: "Pizza Margherita",
+  },
+  {
+    title: "Carbonara de la Casa",
+    desc: "Crema de huevo, guanciale crujiente y pecorino romano.",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCzeCWCw3_Vyvnqgw5dECUo3S4Kl0yMHsd6Msko78ekqCwdC4xk_HNNRrLLU8jv-Uq7RVGuCC-8w629s21gznj9Zb6R_zueTvzfqF45zUedmyy7DFTuhruQHantxkRfNxVBtLz7dgWUlfsMHg8RRRgorEGLxJtdobJsCV421Zygj9mSu8PK9cdRHlyKHfVFMwDyh7B_JrcwChLRuX_sKJTLJ9cAvM9Ijh1wVeZ8lfF3Ot_srCWz8TqIQLss3nPIp2LFsNKuIsCz8rM",
+    alt: "Pizza Carbonara",
+  },
+  {
+    title: "Diávola Piccante",
+    desc: "Salami picante, peperoncino y mozzarella artesana.",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB62viC64sXtwf6ixdTwE3LMLBxwCWkwqEXlaJgqzzaYIi6GwpzdKwfwjFPco4MNKmZf96PnaUXsXEqQRj2smOIAY9E8TVtwbCMmxr7dwSIwwj4R7EO7Xv8kFXZOIsyHaVxrTv6H6GfrVYsVRs6AByRBK_JP5EVpnwwsph-9QpwP1qqCLkpaYC9JW9L1pdR5aZ2vj2IEjTCDgNrhsCQsVPebkkdwVpeLhdk8SXMhWh8liVwG3Nb1cqgLaENDiyYviQTO3dvMSgWt2A",
+    alt: "Pizza Diávola",
+  },
+
+  // Más pizzas (Unsplash)
+  {
+    title: "Pepperoni Clásica",
+    desc: "Pepperoni tostado, mozzarella fundida y base crujiente.",
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80",
+    alt: "Pizza pepperoni",
+  },
+  {
+    title: "Cuatro Quesos",
+    desc: "Quesos seleccionados con gratinado intenso.",
+    img: "https://images.unsplash.com/photo-1601924579440-1fd12a0c0f6a?auto=format&fit=crop&w=1600&q=80",
+    alt: "Pizza cuatro quesos",
+  },
+  {
+    title: "Vegetariana del Huerto",
+    desc: "Verduras asadas, aceite de oliva y toque fresco.",
+    img: "https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&fit=crop&w=1600&q=80",
+    alt: "Pizza vegetariana",
+  },
+  {
+    title: "Prosciutto & Rúcula",
+    desc: "Jamón curado, rúcula fresca y parmesano al final.",
+    img: "https://images.unsplash.com/photo-1589187151053-5ec8818e661b?auto=format&fit=crop&w=1600&q=80",
+    alt: "Pizza con jamón y rúcula",
+  },
+  {
+    title: "Barbacoa",
+    desc: "Pollo, salsa BBQ y cebolla morada.",
+    img: "https://images.unsplash.com/photo-1548365328-8b849c9921f1?auto=format&fit=crop&w=1600&q=80",
+    alt: "Pizza barbacoa",
+  },
+];
+---
+
 <section class="py-24 bg-[color:var(--nostra-charcoal)]" id="insignia">
   <div class="max-w-[1200px] mx-auto px-4">
-    <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+    <div class="flex flex-col md:flex-row items-end justify-between mb-10 gap-6">
       <div class="text-left">
-        <span class="text-[color:var(--primary)] font-bold tracking-[0.3em] uppercase text-xs mb-2 block">Selección de la Casa</span>
+        <span class="text-[color:var(--primary)] font-bold tracking-[0.3em] uppercase text-xs mb-2 block">
+          Selección de la Casa
+        </span>
         <h2 class="text-4xl md:text-6xl font-bold uppercase">Platos Insignia</h2>
       </div>
-      <div class="h-[1px] flex-1 bg-white/10 mx-8 mb-4 hidden md:block"></div>
+
+      <!-- Controles desktop -->
+      <div class="hidden md:flex items-center gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center justify-center w-12 h-12 border border-white/10 hover:border-white/25 transition"
+          id="piz-prev"
+          aria-label="Anterior"
+        >
+          <span class="material-symbols-outlined text-white">chevron_left</span>
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center w-12 h-12 border border-white/10 hover:border-white/25 transition"
+          id="piz-next"
+          aria-label="Siguiente"
+        >
+          <span class="material-symbols-outlined text-white">chevron_right</span>
+        </button>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-      <div class="group bg-[color:var(--nostra-dark)] border border-white/5 overflow-hidden transition-all hover:border-white/20">
-        <div class="relative overflow-hidden aspect-[4/5]">
-          <img alt="Margherita Originale" class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz_rpL0Um8xrKz9gc5l0PblJahAEaCeub2jNSoyLEap3iA5Klm6zYztqy5qwW_X5HRoVuHNAAmkGhg7xTz0FVhxdntUkfhGmXSOClPo-UisepxEbpG66lSCsMF6CU5TdraL8wRCBRcGJIAne1y64MGlsYRXaNqLqwWqpJ36t8UUHk80t3Cb5lIm7EqbGQELKacuL3psr9wETXMPR88I1aEoehxPfcbZPnYdBJlNr7b2lO_yggp3AzFauqaYa5GZzeFd_I03TciWOI" />
-          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[color:var(--nostra-dark)] to-transparent">
-            <span class="bg-[color:var(--primary)] text-white text-xs font-bold py-1 px-3 tracking-widest uppercase">10.00€</span>
-          </div>
-        </div>
-        <div class="p-8">
-          <h4 class="text-2xl font-bold mb-3 tracking-wide">Margherita Originale</h4>
-          <p class="text-[color:var(--cream)]/50 text-sm leading-relaxed font-light">
-            Tomate San Marzano, Mozzarella di Búfala y albahaca fresca.
-          </p>
-        </div>
+    <!-- Carrusel -->
+    <div class="relative">
+      <div
+        id="piz-track"
+        class="piz-track flex gap-6 overflow-x-auto pb-2 scroll-smooth"
+        aria-label="Carrusel de pizzas"
+      >
+        {pizzas.map((p) => (
+          <article class="piz-card snap-start shrink-0 bg-[color:var(--nostra-dark)] border border-white/5 overflow-hidden">
+            <div class="relative overflow-hidden aspect-[4/5]">
+              <img
+                src={p.img}
+                alt={p.alt}
+                class="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 hover:scale-105 transition-all duration-700"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[color:var(--nostra-dark)]/85 via-transparent to-transparent"></div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold tracking-wide">{p.title}</h3>
+              <p class="mt-2 text-[color:var(--cream)]/50 text-sm leading-relaxed font-light">
+                {p.desc}
+              </p>
+            </div>
+          </article>
+        ))}
       </div>
 
-      <div class="group bg-[color:var(--nostra-dark)] border border-white/5 overflow-hidden transition-all hover:border-white/20">
-        <div class="relative overflow-hidden aspect-[4/5]">
-          <img alt="Carbonara de la Casa" class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzeCWCw3_Vyvnqgw5dECUo3S4Kl0yMHsd6Msko78ekqCwdC4xk_HNNRrLLU8jv-Uq7RVGuCC-8w629s21gznj9Zb6R_zueTvzfqF45zUedmyy7DFTuhruQHantxkRfNxVBtLz7dgWUlfsMHg8RRRgorEGLxJtdobJsCV421Zygj9mSu8PK9cdRHlyKHfVFMwDyh7B_JrcwChLRuX_sKJTLJ9cAvM9Ijh1wVeZ8lfF3Ot_srCWz8TqIQLss3nPIp2LFsNKuIsCz8rM" />
-          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[color:var(--nostra-dark)] to-transparent">
-            <span class="bg-[color:var(--primary)] text-white text-xs font-bold py-1 px-3 tracking-widest uppercase">12.00€</span>
-          </div>
-        </div>
-        <div class="p-8">
-          <h4 class="text-2xl font-bold mb-3 tracking-wide">Carbonara de la Casa</h4>
-          <p class="text-[color:var(--cream)]/50 text-sm leading-relaxed font-light">
-            Crema de huevo, guanciale crujiente y pecorino romano.
-          </p>
-        </div>
+      <!-- Dots -->
+      <div class="mt-6 flex items-center justify-center gap-2" id="piz-dots" aria-label="Navegación del carrusel">
+        {pizzas.map((_, i) => (
+          <button
+            type="button"
+            class="piz-dot w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all"
+            data-index={i}
+            aria-label={`Ir a pizza ${i + 1}`}
+          />
+        ))}
       </div>
 
-      <div class="group bg-[color:var(--nostra-dark)] border border-white/5 overflow-hidden transition-all hover:border-white/20">
-        <div class="relative overflow-hidden aspect-[4/5]">
-          <img alt="Diávola Piccante" class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB62viC64sXtwf6ixdTwE3LMLBxwCWkwqEXlaJgqzzaYIi6GwpzdKwfwjFPco4MNKmZf96PnaUXsXEqQRj2smOIAY9E8TVtwbCMmxr7dwSIwwj4R7EO7Xv8kFXZOIsyHaVxrTv6H6GfrVYsVRs6AByRBK_JP5EVpnwwsph-9QpwP1qqCLkpaYC9JW9L1pdR5aZ2vj2IEjTCDgNrhsCQsVPebkkdwVpeLhdk8SXMhWh8liVwG3Nb1cqgLaENDiyYviQTO3dvMSgWt2A" />
-          <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[color:var(--nostra-dark)] to-transparent">
-            <span class="bg-[color:var(--primary)] text-white text-xs font-bold py-1 px-3 tracking-widest uppercase">13.50€</span>
-          </div>
-        </div>
-        <div class="p-8">
-          <h4 class="text-2xl font-bold mb-3 tracking-wide">Diávola Piccante</h4>
-          <p class="text-[color:var(--cream)]/50 text-sm leading-relaxed font-light">
-            Salami picante de Calabria, peperoncino y mozzarella artesana.
-          </p>
-        </div>
+      <!-- Botones móvil -->
+      <div class="mt-6 flex md:hidden items-center justify-between">
+        <button
+          type="button"
+          class="flex items-center gap-2 px-5 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          id="piz-prev-m"
+        >
+          <span class="material-symbols-outlined">chevron_left</span>
+          <span class="text-sm uppercase tracking-widest">Anterior</span>
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-2 px-5 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          id="piz-next-m"
+        >
+          <span class="text-sm uppercase tracking-widest">Siguiente</span>
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* ancho de tarjeta responsivo */
+  .piz-card {
+    border-radius: 12px;
+    width: clamp(260px, 75vw, 360px);
+  }
+
+  /* scroll-snap */
+  .piz-track {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .piz-track::-webkit-scrollbar { display: none; }
+
+  /* pill para el dot activo */
+  .piz-dot.is-active {
+    background: var(--primary);
+    width: 32px;
+  }
+</style>
+
+<script is:inline>
+  const track = document.getElementById("piz-track");
+  const prev = document.getElementById("piz-prev");
+  const next = document.getElementById("piz-next");
+  const prevM = document.getElementById("piz-prev-m");
+  const nextM = document.getElementById("piz-next-m");
+  const dots = document.querySelectorAll(".piz-dot");
+
+  if (!track) throw new Error("piz-track not found");
+
+  const cards = Array.from(track.querySelectorAll(".piz-card"));
+  let index = 0;
+
+  const getCardWidth = () => {
+    const first = cards[0];
+    if (!first) return 0;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+    return first.getBoundingClientRect().width + gap;
+  };
+
+  const scrollToIndex = (i) => {
+    index = Math.max(0, Math.min(i, cards.length - 1));
+    track.scrollTo({ left: index * getCardWidth(), behavior: "smooth" });
+    updateDots();
+  };
+
+  const updateDots = () => {
+    dots.forEach((d, i) => {
+      if (i === index) d.classList.add("is-active");
+      else d.classList.remove("is-active");
+    });
+  };
+
+  const onPrev = () => scrollToIndex(index - 1);
+  const onNext = () => scrollToIndex(index + 1);
+
+  prev?.addEventListener("click", onPrev);
+  next?.addEventListener("click", onNext);
+  prevM?.addEventListener("click", onPrev);
+  nextM?.addEventListener("click", onNext);
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const i = Number(dot.getAttribute("data-index") || "0");
+      scrollToIndex(i);
+    });
+  });
+
+  // Mantener index actualizado si el usuario hace swipe/scroll
+  let raf = null;
+  track.addEventListener("scroll", () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const w = getCardWidth();
+      if (!w) return;
+      index = Math.round(track.scrollLeft / w);
+      updateDots();
+    });
+  }, { passive: true });
+
+  // Drag con ratón (desktop)
+  let isDown = false, startX = 0, startLeft = 0;
+
+  track.addEventListener("mousedown", (e) => {
+    isDown = true;
+    startX = e.pageX;
+    startLeft = track.scrollLeft;
+    track.style.cursor = "grabbing";
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!isDown) return;
+    isDown = false;
+    track.style.cursor = "";
+    // “encaja” al slide más cercano
+    const w = getCardWidth();
+    if (w) scrollToIndex(Math.round(track.scrollLeft / w));
+  });
+
+  track.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const dx = e.pageX - startX;
+    track.scrollLeft = startLeft - dx;
+  });
+
+  // init
+  updateDots();
+</script>
