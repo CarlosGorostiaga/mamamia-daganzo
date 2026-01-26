@@ -1,193 +1,26 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/mammamia/Header.astro";
+import Hero from "../components/mammamia/Hero.astro";
+import Pilares from "../components/mammamia/Pilares.astro";
+import Insignia from "../components/mammamia/Insignia.astro";
+import Lealtad from "../components/mammamia/Lealtad.astro";
+import Visitanos from "../components/mammamia/Visitanos.astro";
+import Footer from "../components/mammamia/Footer.astro";
+import FloatingCallButton from "../components/mammamia/FloatingCallButton.astro";
 ---
 
 <Layout>
-	<header
-		class="sticky top-0 z-50 bg-[color:var(--nostra-dark)]/95 backdrop-blur-sm border-b border-white/5 px-4 md:px-10 py-4"
-	>
-		<div class="max-w-[1200px] mx-auto flex items-center justify-between">
-			<div class="flex items-center gap-3">
-				<div class="size-10 flex items-center justify-center text-[color:var(--primary)]">
-					<span class="material-symbols-outlined text-4xl">local_pizza</span>
-				</div>
-				<div class="flex flex-col">
-					<h2
-						class="text-white text-xl font-bold leading-none tracking-wider font-display uppercase"
-					>
-						Pizzería Mamma Mía
-					</h2>
-					<span class="text-[10px] tracking-[0.3em] uppercase opacity-60">Daganzo de Arriba</span>
-				</div>
-			</div>
+  <Header />
 
-			<div class="hidden md:flex items-center gap-10">
-				<nav class="flex gap-8">
-					<a
-						class="text-[color:var(--cream)]/70 text-xs font-semibold uppercase tracking-widest hover:text-white transition-colors"
-						href="#codigo"
-						>Nuestro Código</a
-					>
-					<a
-						class="text-[color:var(--cream)]/70 text-xs font-semibold uppercase tracking-widest hover:text-white transition-colors"
-						href="#insignia"
-						>Platos Insignia</a
-					>
-					<a
-						class="text-[color:var(--cream)]/70 text-xs font-semibold uppercase tracking-widest hover:text-white transition-colors"
-						href="#lealtad"
-						>Lealtad</a
-					>
-					<a
-						class="text-[color:var(--cream)]/70 text-xs font-semibold uppercase tracking-widest hover:text-white transition-colors"
-						href="#visitanos"
-						>Visítanos</a
-					>
-				</nav>
+  <main>
+    <Hero />
+    <Pilares />
+    <Insignia />
+    <Lealtad />
+    <Visitanos />
+  </main>
 
-				<a
-					class="flex items-center gap-2 border border-[color:var(--primary)]/40 px-6 py-2 hover:bg-[color:var(--primary)] transition-all group"
-					href="tel:+34918841694"
-				>
-					<span class="text-sm font-bold tracking-widest uppercase">918 84 16 94</span>
-				</a>
-			</div>
-
-			<div class="md:hidden">
-				<span class="material-symbols-outlined text-3xl cursor-pointer">menu</span>
-			</div>
-		</div>
-	</header>
-
-	<main>
-		<section
-			class="relative min-h-[90vh] flex items-center justify-center text-center px-4 overflow-hidden"
-		>
-			<div class="absolute inset-0 z-0">
-				<div
-					class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-[color:var(--nostra-dark)] z-10"
-				></div>
-				<img
-					alt="La pizzería tradicional"
-					class="w-full h-full object-cover grayscale-[0.3]"
-					src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZbQzBEVCf75h92WEi_9LjhnXgYOwLhP6Bip9iemHdUAmuSMdktVnR9KCCke19lperXJvqYXQnBZBi9C9NgoxJcgKinB-pXaEURSXVS2StNV9-4e9Nkr8LDxuamr4CD8RSZ9gTGMgwecvzC7ejtuPCWgHCmJJ7bsFiqRDtURsCLEa67LhS2iBZ2stkAiUf2KQ_n2a_xd_1S2MIM539S0VWDeiU7a_pgk8Xqu1vlFpVwbLIn67mszYEKTtmVrIPpRxkCv_RE48w1go"
-				/>
-			</div>
-
-			<div class="relative z-20 max-w-[1000px]">
-				<div class="flex items-center justify-center gap-4 mb-6 opacity-80">
-					<div class="h-[1px] w-12 bg-[color:var(--italian-green)]"></div>
-					<span class="text-xs uppercase tracking-[0.5em] font-medium">Desde 1993 en Daganzo</span>
-					<div class="h-[1px] w-12 bg-[color:var(--italian-red)]"></div>
-				</div>
-
-				<h1 class="text-white text-5xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight">
-					NUESTRO CÓDIGO:<br />TRADICIÓN Y RESPETO
-				</h1>
-
-				<p
-					class="text-[color:var(--cream)]/80 text-lg md:text-2xl font-light mb-12 max-w-2xl mx-auto leading-relaxed"
-				>
-					Pizzería Mamma Mía: El sabor auténtico de Daganzo donde la masa dicta las reglas.
-				</p>
-
-				<div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-					<a
-						class="w-full sm:w-auto min-w-[240px] bg-[color:var(--primary)] hover:bg-red-700 text-white px-10 py-5 text-sm font-black tracking-widest uppercase transition-all shadow-2xl flex items-center justify-center gap-3"
-						href="tel:+34918841694"
-					>
-						<span class="material-symbols-outlined text-xl">call</span>
-						Llamar para pedir
-					</a>
-
-					<a
-						class="w-full sm:w-auto min-w-[240px] border border-white/30 hover:border-white text-white px-10 py-5 text-sm font-black tracking-widest uppercase transition-all backdrop-blur-sm flex items-center justify-center gap-3"
-						href="#insignia"
-					>
-						<span class="material-symbols-outlined text-xl">menu_book</span>
-						Ver la Carta
-					</a>
-				</div>
-
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto border-t border-white/10 pt-10">
-					<div class="flex items-center justify-center gap-3 text-[color:var(--cream)]/70 uppercase tracking-widest text-xs font-bold">
-						<span class="material-symbols-outlined text-[color:var(--primary)]">delivery_dining</span>
-						A domicilio
-					</div>
-					<div class="flex items-center justify-center gap-3 text-[color:var(--cream)]/70 uppercase tracking-widest text-xs font-bold">
-						<span class="material-symbols-outlined text-[color:var(--primary)]">takeout_dining</span>
-						Recogida
-					</div>
-					<div class="flex items-center justify-center gap-3 text-[color:var(--cream)]/70 uppercase tracking-widest text-xs font-bold">
-						<span class="material-symbols-outlined text-[color:var(--primary)]">event_seat</span>
-						Reservas
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section class="py-24 bg-[color:var(--nostra-dark)] border-y border-white/5" id="codigo">
-			<div class="max-w-[1200px] mx-auto px-4">
-				<div class="text-center mb-20">
-					<h2 class="text-3xl md:text-5xl font-bold mb-4 uppercase tracking-tighter">Los Tres Pilares</h2>
-					<div class="w-20 h-1 bg-[color:var(--primary)] mx-auto mb-4"></div>
-				</div>
-
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-					<div class="group text-center">
-						<div class="mb-8 inline-block">
-							<span class="material-symbols-outlined text-6xl text-white opacity-40 group-hover:opacity-100 group-hover:text-[color:var(--primary)] transition-all duration-500">waves</span>
-						</div>
-						<h3 class="text-2xl font-bold mb-4 tracking-widest uppercase">La Masa</h3>
-						<p class="text-[color:var(--cream)]/60 leading-relaxed font-light">
-							Fermentación natural. 48 horas de reposo para una digestión ligera y un sabor inigualable. Es nuestra base innegociable.
-						</p>
-					</div>
-
-					<div class="group text-center">
-						<div class="mb-8 inline-block">
-							<span class="material-symbols-outlined text-6xl text-white opacity-40 group-hover:opacity-100 group-hover:text-[color:var(--primary)] transition-all duration-500">nutrition</span>
-						</div>
-						<h3 class="text-2xl font-bold mb-4 tracking-widest uppercase">El Secreto</h3>
-						<p class="text-[color:var(--cream)]/60 leading-relaxed font-light">
-							Ingredientes de primera. Tomate San Marzano y quesos seleccionados para garantizar el alma de Italia en cada bocado.
-						</p>
-					</div>
-
-					<div class="group text-center">
-						<div class="mb-8 inline-block">
-							<span class="material-symbols-outlined text-6xl text-white opacity-40 group-hover:opacity-100 group-hover:text-[color:var(--primary)] transition-all duration-500">fireplace</span>
-						</div>
-						<h3 class="text-2xl font-bold mb-4 tracking-widest uppercase">El Horno</h3>
-						<p class="text-[color:var(--cream)]/60 leading-relaxed font-light">
-							Piedra y fuego. El calor tradicional forja el carácter crujiente de nuestras pizzas. Sin atajos, sin concesiones.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Para ir rápido: pega el resto de secciones igual que en Stitch.
-		     Si quieres, te lo convierto completo en el siguiente mensaje,
-		     pero con esto ya visualizas el estilo y confirmas la integración. -->
-	</main>
-
-	<footer class="bg-[color:var(--nostra-dark)] border-t border-white/5 py-20 px-4">
-		<div class="max-w-[1200px] mx-auto">
-			<div class="tricolor-border pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-[color:var(--cream)]/30 tracking-[0.3em] uppercase">
-				<span>© 2024 PIZZERÍA MAMMA MÍA - TODOS LOS DERECHOS RESERVADOS</span>
-				<div class="flex gap-8">
-					<a class="hover:text-white transition-colors" href="#">AVISO LEGAL</a>
-					<a class="hover:text-white transition-colors" href="#">COOKIES</a>
-					<a class="hover:text-white transition-colors" href="#">PRIVACIDAD</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<div class="fixed bottom-8 right-8 md:hidden z-50">
-		<a class="flex items-center justify-center w-16 h-16 bg-[color:var(--primary)] text-white shadow-2xl rounded-full" href="tel:+34918841694">
-			<span class="material-symbols-outlined text-3xl">call</span>
-		</a>
-	</div>
+  <Footer />
+  <FloatingCallButton />
 </Layout>

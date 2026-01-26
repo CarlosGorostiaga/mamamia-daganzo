@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CartaHeader from "../components/carta/CartaHeader.astro";
+import CartaSlider from "../components/carta/CartaSlider.astro";
+import CartaCTA from "../components/carta/CartaCTA.astro";
+
+const cartaPages = [
+  {
+    url: "https://static.wixstatic.com/media/85fc37_c4fa9fc0506c4f85b1ac39cdbd030c13~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/85fc37_c4fa9fc0506c4f85b1ac39cdbd030c13~mv2.png",
+    alt: "Carta página 1",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_74ce26b303ef4d568712b26c9c52e9a8~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/3%20-%20vf.png",
+    alt: "Carta página 2",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_c61962db6bd44834b322886a190f0423~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/85fc37_c61962db6bd44834b322886a190f0423~mv2.png",
+    alt: "Carta página 3",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_a0c94c91f2aa4f78964c0f5eab14b8f9~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/5%20-%20vf.png",
+    alt: "Carta página 4",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_c1d41be3556a4680a2d6eb1a420b25d5~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/7%20-%20vf.png",
+    alt: "Carta página 5",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_3f8a0768240f4074a2b01001266de4c8~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/8%20-%20vf.png",
+    alt: "Carta página 6",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_cf3ffc9e74d741e49f8367317f9f1d6e~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/9%20-%20c.png",
+    alt: "Carta página 7",
+  },
+  {
+    url: "https://static.wixstatic.com/media/85fc37_da55db4b35e04ab3b40f02742047d63a~mv2.png/v1/fill/w_727,h_1030,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/10.png",
+    alt: "Carta página 8",
+  },
+];
+---
+
+<Layout>
+  <div class="min-h-screen bg-[color:var(--nostra-dark)] py-12 px-4">
+    <div class="max-w-[1400px] mx-auto">
+      <CartaHeader />
+      <div class="max-w-[900px] mx-auto">
+        <CartaSlider pages={cartaPages} />
+        <CartaCTA />
+      </div>
+    </div>
+  </div>
+</Layout>

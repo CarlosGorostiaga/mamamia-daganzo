@@ -1,0 +1,164 @@
+---
+type CartaPage = { url: string; alt: string };
+
+const { pages } = Astro.props as { pages: CartaPage[] };
+---
+
+<div class="relative bg-[color:var(--nostra-charcoal)] rounded-lg shadow-2xl p-6 sm:p-8">
+  <!-- Slider Container -->
+  <div class="relative overflow-hidden" id="menu-slider">
+    <div
+      class="flex w-full transition-transform duration-500 ease-out will-change-transform"
+      id="slider-track"
+    >
+      {
+        pages.map((page, index) => (
+          <div class="w-full flex-none" data-page={index}>
+            <!-- padding interno (IMPORTANTE para que el slide sea 100% exacto) -->
+            <div class="px-2 sm:px-4">
+              <div class="relative aspect-[727/1030] bg-[color:var(--nostra-dark)] rounded-lg overflow-hidden shadow-xl">
+                <img
+                  src={page.url}
+                  alt={page.alt}
+                  class="w-full h-full object-contain"
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="mt-8 flex items-center justify-between">
+    <button
+      id="prev-btn"
+      class="flex items-center gap-2 px-5 sm:px-6 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      type="button"
+    >
+      <span class="material-symbols-outlined">chevron_left</span>
+      <span class="text-sm uppercase tracking-widest hidden sm:inline">Anterior</span>
+    </button>
+
+    <div class="flex items-center gap-3">
+      <span class="text-[color:var(--cream)]/60 text-sm">
+        Página <span id="current-page" class="text-white font-bold">1</span> de{" "}
+        <span class="text-white font-bold">{pages.length}</span>
+      </span>
+    </div>
+
+    <button
+      id="next-btn"
+      class="flex items-center gap-2 px-5 sm:px-6 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      type="button"
+    >
+      <span class="text-sm uppercase tracking-widest hidden sm:inline">Siguiente</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- Dots -->
+  <div class="mt-6 flex items-center justify-center gap-2" id="dots-container">
+    {
+      pages.map((_, index) => (
+        <button
+          class="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all dot"
+          data-index={index}
+          aria-label={`Ir a página ${index + 1}`}
+          type="button"
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script is:inline>
+  const sliderTrack = document.getElementById("slider-track");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const currentPageSpan = document.getElementById("current-page");
+  const dots = document.querySelectorAll(".dot");
+
+  let currentPage = 0;
+  const totalPages = dots.length;
+
+  function updateSlider() {
+    if (!sliderTrack || !currentPageSpan) return;
+
+    sliderTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+    currentPageSpan.textContent = String(currentPage + 1);
+
+    if (prevBtn) prevBtn.disabled = currentPage === 0;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages - 1;
+
+    dots.forEach((dot, index) => {
+      if (index === currentPage) {
+        dot.classList.add("!bg-[color:var(--primary)]", "!w-8");
+      } else {
+        dot.classList.remove("!bg-[color:var(--primary)]", "!w-8");
+      }
+    });
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    if (currentPage > 0) {
+      currentPage--;
+      updateSlider();
+    }
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    if (currentPage < totalPages - 1) {
+      currentPage++;
+      updateSlider();
+    }
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      currentPage = index;
+      updateSlider();
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" && currentPage > 0) {
+      currentPage--;
+      updateSlider();
+    } else if (e.key === "ArrowRight" && currentPage < totalPages - 1) {
+      currentPage++;
+      updateSlider();
+    }
+  });
+
+  // Touch swipe (solo horizontal)
+  let touchStartX = 0;
+
+  const slider = document.getElementById("menu-slider");
+  slider?.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  slider?.addEventListener("touchend", (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const dx = touchEndX - touchStartX;
+
+    if (dx < -50 && currentPage < totalPages - 1) {
+      currentPage++;
+      updateSlider();
+    }
+    if (dx > 50 && currentPage > 0) {
+      currentPage--;
+      updateSlider();
+    }
+  });
+
+  updateSlider();
+</script>
+
+<style>
+  .dot { transition: all 0.3s ease; }
+  #menu-slider { touch-action: pan-y; }
+</style>

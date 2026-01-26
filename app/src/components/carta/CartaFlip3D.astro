@@ -1,0 +1,333 @@
+---
+type CartaPage = { url: string; alt: string };
+const { pages } = Astro.props as { pages: CartaPage[] };
+---
+
+<div class="book-wrap" data-pages={JSON.stringify(pages)}>
+  <div class="book">
+    <!-- Lomo -->
+    <div class="spine"></div>
+
+    <!-- Página base (debajo) -->
+    <div class="page base">
+      <img class="baseImg" src={pages[0]?.url} alt={pages[0]?.alt} loading="eager" />
+      <div class="paper"></div>
+    </div>
+
+    <!-- Página actual (encima) -->
+    <div class="page current">
+      <img class="currentImg" src={pages[0]?.url} alt={pages[0]?.alt} loading="eager" />
+      <div class="paper"></div>
+    </div>
+
+    <!-- Hoja que gira -->
+    <div class="leaf" aria-hidden="true">
+      <div class="leaf-face front">
+        <img class="leafFrontImg" src={pages[0]?.url} alt="" />
+        <div class="paper"></div>
+      </div>
+      <div class="leaf-face back">
+        <img class="leafBackImg" src={pages[0]?.url} alt="" />
+        <div class="paper"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <div class="mt-8 flex items-center justify-between">
+    <button
+      class="prevBtn flex items-center gap-2 px-5 sm:px-6 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      type="button"
+    >
+      <span class="material-symbols-outlined">chevron_left</span>
+      <span class="text-sm uppercase tracking-widest hidden sm:inline">Anterior</span>
+    </button>
+
+    <div class="flex items-center gap-3">
+      <span class="text-[color:var(--cream)]/60 text-sm">
+        Página <span class="pageNum text-white font-bold">1</span> de
+        <span class="text-white font-bold">{pages.length}</span>
+      </span>
+    </div>
+
+    <button
+      class="nextBtn flex items-center gap-2 px-5 sm:px-6 py-3 bg-[color:var(--primary)]/10 hover:bg-[color:var(--primary)] text-white border border-[color:var(--primary)]/40 hover:border-[color:var(--primary)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+      type="button"
+    >
+      <span class="text-sm uppercase tracking-widest hidden sm:inline">Siguiente</span>
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- Dots -->
+  <div class="mt-6 flex items-center justify-center gap-2 dots">
+    {
+      pages.map((_, idx) => (
+        <button
+          class="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all dot"
+          data-index={idx}
+          aria-label={`Ir a página ${idx + 1}`}
+          type="button"
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.currentScript?.closest(".book-wrap");
+    if (!root) return;
+
+    const pages = JSON.parse(root.getAttribute("data-pages") || "[]");
+    if (!pages.length) return;
+
+    const book = root.querySelector(".book");
+    const leaf = root.querySelector(".leaf");
+
+    const baseImg = root.querySelector(".baseImg");
+    const currentImg = root.querySelector(".currentImg");
+    const leafFrontImg = root.querySelector(".leafFrontImg");
+    const leafBackImg = root.querySelector(".leafBackImg");
+
+    const prevBtn = root.querySelector(".prevBtn");
+    const nextBtn = root.querySelector(".nextBtn");
+    const pageNum = root.querySelector(".pageNum");
+    const dots = root.querySelectorAll(".dot");
+
+    let current = 0;
+    let isTurning = false;
+
+    const setImg = (imgEl, idx) => {
+      if (!imgEl) return;
+      imgEl.src = pages[idx]?.url || "";
+      imgEl.alt = pages[idx]?.alt || "";
+    };
+
+    const preload = (idx) => {
+      if (!pages[idx]) return;
+      const img = new Image();
+      img.src = pages[idx].url;
+    };
+
+    const updateUI = () => {
+      if (pageNum) pageNum.textContent = String(current + 1);
+      if (prevBtn) prevBtn.disabled = current === 0 || isTurning;
+      if (nextBtn) nextBtn.disabled = current === pages.length - 1 || isTurning;
+
+      dots.forEach((d, i) => {
+        if (i === current) d.classList.add("!bg-[color:var(--primary)]", "!w-8");
+        else d.classList.remove("!bg-[color:var(--primary)]", "!w-8");
+      });
+    };
+
+    const turnTo = (target) => {
+      if (isTurning) return;
+      if (target < 0 || target >= pages.length) return;
+      if (target === current) return;
+      if (!leaf) return;
+
+      const dir = target > current ? "next" : "prev";
+      const nextIndex = target;
+
+      isTurning = true;
+      updateUI();
+
+      // Página destino debajo
+      setImg(baseImg, nextIndex);
+
+      // Hoja: delante=actual, detrás=destino
+      setImg(leafFrontImg, current);
+      setImg(leafBackImg, nextIndex);
+
+      // Página actual quieta
+      setImg(currentImg, current);
+
+      preload(nextIndex + 1);
+      preload(nextIndex - 1);
+
+      leaf.classList.remove("turn-next", "turn-prev", "is-turning");
+      void leaf.offsetWidth;
+
+      if (dir === "next") leaf.classList.add("turn-next");
+      else leaf.classList.add("turn-prev");
+
+      leaf.classList.add("is-turning");
+
+      const DURATION = 650;
+
+      window.setTimeout(() => {
+        current = nextIndex;
+        setImg(currentImg, current);
+        leaf.classList.remove("is-turning", "turn-next", "turn-prev");
+        isTurning = false;
+        updateUI();
+      }, DURATION);
+    };
+
+    prevBtn?.addEventListener("click", () => turnTo(current - 1));
+    nextBtn?.addEventListener("click", () => turnTo(current + 1));
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const idx = Number(dot.getAttribute("data-index"));
+        turnTo(idx);
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") turnTo(current - 1);
+      if (e.key === "ArrowRight") turnTo(current + 1);
+    });
+
+    // Swipe horizontal (sin pelear con scroll)
+    let startX = 0;
+    let startY = 0;
+
+    book?.addEventListener("touchstart", (e) => {
+      const t = e.changedTouches[0];
+      startX = t.screenX;
+      startY = t.screenY;
+    }, { passive: true });
+
+    book?.addEventListener("touchend", (e) => {
+      const t = e.changedTouches[0];
+      const dx = t.screenX - startX;
+      const dy = t.screenY - startY;
+
+      if (Math.abs(dy) > Math.abs(dx)) return;
+
+      if (dx < -50) turnTo(current + 1);
+      if (dx > 50) turnTo(current - 1);
+    });
+
+    // Init
+    setImg(baseImg, 0);
+    setImg(currentImg, 0);
+    updateUI();
+  })();
+</script>
+
+<style>
+  .book-wrap { max-width: 900px; margin: 0 auto; }
+
+  .book{
+    position: relative;
+    width: 100%;
+    background: rgba(20,20,20,1);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    border-radius: 14px;
+    padding: 18px;
+    overflow: hidden;
+    perspective: 1400px;
+    touch-action: pan-y;
+  }
+
+  .spine{
+    position:absolute;
+    top: 18px;
+    bottom: 18px;
+    left: 18px;
+    width: 14px;
+    background: linear-gradient(
+      to right,
+      rgba(0,0,0,0.85),
+      rgba(255,255,255,0.06),
+      rgba(0,0,0,0.55)
+    );
+    border-right: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    z-index: 5;
+    pointer-events:none;
+  }
+
+  .page{
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--nostra-dark);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    aspect-ratio: 727 / 1030;
+  }
+
+  .page img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display:block;
+  }
+
+  .paper{
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(1200px 600px at 20% 20%, rgba(255,255,255,0.06), transparent 55%),
+      radial-gradient(1200px 600px at 80% 80%, rgba(255,255,255,0.04), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 6px);
+    mix-blend-mode: overlay;
+    opacity: 0.35;
+    pointer-events:none;
+  }
+
+  .base{ z-index: 1; }
+  .current{ z-index: 2; margin-top: 14px; }
+  @media (min-width: 640px){
+    .current{ margin-top: 0; }
+  }
+
+  .leaf{
+    position: absolute;
+    inset: 18px;
+    z-index: 4;
+    transform-style: preserve-3d;
+    pointer-events:none;
+    opacity: 0;
+  }
+  .leaf.is-turning{ opacity: 1; }
+
+  .leaf-face{
+    position:absolute;
+    inset:0;
+    border-radius: 12px;
+    overflow:hidden;
+    backface-visibility: hidden;
+    background: var(--nostra-dark);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+
+  .leaf-face img{ width:100%; height:100%; object-fit: contain; display:block; }
+
+  .leaf-face.front::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(to left, rgba(0,0,0,0.45), transparent 40%);
+    pointer-events:none;
+  }
+
+  .leaf-face.back{
+    transform: rotateY(180deg);
+  }
+
+  .leaf.turn-next{ transform-origin: left center; }
+  .leaf.turn-prev{ transform-origin: right center; }
+
+  .leaf.turn-next.is-turning{
+    animation: turnNext 650ms cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .leaf.turn-prev.is-turning{
+    animation: turnPrev 650ms cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  @keyframes turnNext{
+    0%{ transform: rotateY(0deg); filter: drop-shadow(0 25px 35px rgba(0,0,0,.45)); }
+    40%{ filter: drop-shadow(-20px 35px 45px rgba(0,0,0,.55)); }
+    100%{ transform: rotateY(-165deg); filter: drop-shadow(-35px 35px 55px rgba(0,0,0,.65)); }
+  }
+  @keyframes turnPrev{
+    0%{ transform: rotateY(0deg); filter: drop-shadow(0 25px 35px rgba(0,0,0,.45)); }
+    40%{ filter: drop-shadow(20px 35px 45px rgba(0,0,0,.55)); }
+    100%{ transform: rotateY(165deg); filter: drop-shadow(35px 35px 55px rgba(0,0,0,.65)); }
+  }
+</style>
