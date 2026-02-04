@@ -42,12 +42,72 @@ const cartaPages = [
 
 <Layout>
   <div class="min-h-screen bg-[color:var(--nostra-dark)] py-12 px-4">
-    <div class="max-w-[1400px] mx-auto">
+    <div class="max-w-[1600px] mx-auto">
       <CartaHeader />
-      <div class="max-w-[900px] mx-auto">
+      <div class="max-w-[1120px] mx-auto">
         <CartaSlider pages={cartaPages} />
         <CartaCTA />
       </div>
     </div>
   </div>
+
+  <div
+    id="offer-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4 py-10"
+    aria-hidden="true"
+  >
+    <div class="w-full max-w-xl rounded-2xl border border-white/10 bg-[color:var(--nostra-charcoal)] p-8 text-center text-white shadow-2xl">
+      <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--primary)]/20">
+        <span class="material-symbols-outlined text-3xl text-[color:var(--primary)]">local_offer</span>
+      </div>
+      <p class="text-sm uppercase tracking-[0.3em] text-[color:var(--cream)]/70">Oferta de la semana</p>
+      <h2 class="mt-3 text-3xl font-semibold">Cena italiana completa</h2>
+      <p class="mt-3 text-[color:var(--cream)]/70">
+        Entrante + plato principal + postre por <span class="text-white font-semibold">19,90€</span>.
+      </p>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a
+          href="/reservar"
+          class="inline-flex items-center justify-center rounded-full bg-[color:var(--primary)] px-6 py-3 text-sm font-semibold uppercase tracking-widest text-[color:var(--nostra-dark)] transition hover:brightness-110"
+        >
+          Reservar ahora
+        </a>
+        <button
+          id="offer-close"
+          class="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-widest text-white/80 transition hover:border-white/60 hover:text-white"
+          type="button"
+        >
+          Ver la carta
+        </button>
+      </div>
+    </div>
+  </div>
 </Layout>
+
+<script is:inline>
+  const offerModal = document.getElementById("offer-modal");
+  const offerClose = document.getElementById("offer-close");
+  const offerKey = "mammamia_offer_seen";
+
+  if (offerModal && !localStorage.getItem(offerKey)) {
+    offerModal.classList.remove("hidden");
+    offerModal.classList.add("flex");
+    offerModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeOffer() {
+    if (!offerModal) return;
+    offerModal.classList.add("hidden");
+    offerModal.classList.remove("flex");
+    offerModal.setAttribute("aria-hidden", "true");
+    localStorage.setItem(offerKey, "true");
+  }
+
+  offerClose?.addEventListener("click", closeOffer);
+
+  offerModal?.addEventListener("click", (event) => {
+    if (event.target === offerModal) {
+      closeOffer();
+    }
+  });
+</script>
