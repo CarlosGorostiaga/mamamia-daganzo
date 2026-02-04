@@ -4,7 +4,7 @@ type CartaPage = { url: string; alt: string };
 const { pages } = Astro.props as { pages: CartaPage[] };
 ---
 
-<div class="relative bg-[color:var(--nostra-charcoal)] rounded-lg shadow-2xl p-6 sm:p-8">
+<div class="relative bg-[color:var(--nostra-charcoal)] rounded-lg shadow-2xl p-4 sm:p-6">
   <!-- Slider Container -->
   <div class="relative overflow-hidden" id="menu-slider">
     <div
@@ -15,7 +15,7 @@ const { pages } = Astro.props as { pages: CartaPage[] };
         pages.map((page, index) => (
           <div class="w-full flex-none" data-page={index}>
             <!-- padding interno (IMPORTANTE para que el slide sea 100% exacto) -->
-            <div class="px-2 sm:px-4">
+            <div class="px-1 sm:px-3">
               <div class="relative aspect-[727/1030] bg-[color:var(--nostra-dark)] rounded-lg overflow-hidden shadow-xl">
                 <img
                   src={page.url}
